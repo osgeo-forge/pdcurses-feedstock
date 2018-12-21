@@ -1,0 +1,55 @@
+diff --git a/win32/mingwin32.mak b/win32/mingwin32.mak
+index 7fb17e8..70cf2c9 100644
+--- a/win32/mingwin32.mak
++++ b/win32/mingwin32.mak
+@@ -30,8 +30,8 @@ endif
+
+ CFLAGS += -I$(PDCURSES_SRCDIR)
+
+-BASEDEF		= $(PDCURSES_SRCDIR)\exp-base.def
+-WIDEDEF		= $(PDCURSES_SRCDIR)\exp-wide.def
++BASEDEF		= $(PDCURSES_SRCDIR)/exp-base.def
++WIDEDEF		= $(PDCURSES_SRCDIR)/exp-wide.def
+
+ DEFDEPS		= $(BASEDEF)
+
+@@ -70,9 +70,9 @@ all:	libs demos
+ libs:	$(LIBCURSES)
+
+ clean:
+-	-del *.o
+-	-del *.exe
+-	-del $(CLEAN)
++	-rm -f *.o
++	-rm -f *.exe
++	-rm -f $(CLEAN)
+
+ demos:	$(DEMOS)
+ 	strip *.exe
+@@ -80,14 +80,14 @@ demos:	$(DEMOS)
+ $(DEFFILE): $(DEFDEPS)
+ 	echo LIBRARY pdcurses > $@
+ 	echo EXPORTS >> $@
+-	type $(BASEDEF) >> $@
++	cat $(BASEDEF) >> $@
+ ifeq ($(WIDE),Y)
+-	type $(WIDEDEF) >> $@
++	cat $(WIDEDEF) >> $@
+ endif
+
+ $(LIBCURSES) : $(LIBDEPS)
+ 	$(LIBEXE) $(LIBFLAGS) $@ $?
+-	-copy pdcurses.a panel.a
++	-cp pdcurses.a panel.a
+
+ $(LIBOBJS) $(PDCOBJS) : $(PDCURSES_HEADERS)
+ $(PDCOBJS) : $(PDCURSES_WIN_H)
+@@ -103,7 +103,7 @@ $(PDCOBJS) : %.o: $(osdir)/%.c
+
+ firework.exe newdemo.exe rain.exe testcurs.exe worm.exe xmas.exe \
+ ptest.exe: %.exe: $(demodir)/%.c
+-	$(CC) $(CFLAGS) -o$@ $< $(LIBCURSES)
++	$(CC) $(CFLAGS) -I$(osdir) -o$@ $< $(LIBCURSES)
+
+ tuidemo.exe: tuidemo.o tui.o
+ 	$(LINK) $(LDFLAGS) -o$@ tuidemo.o tui.o $(LIBCURSES)

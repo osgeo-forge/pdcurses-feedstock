@@ -7,6 +7,8 @@ package:
 source:
   - url: https://github.com/wmcbrine/PDCurses/archive/PDCurses_3_4.tar.gz
     sha256: 41c88b053efaeabda0b9e6799c68575ee35a75b317e9ece0f9ecc31ce0903174
+    patches:
+      - 0001_fix_ming_make_for_bash.patch
 
 build:
   number: 0
@@ -14,7 +16,10 @@ build:
 
 requirements:
   build:
-    - m2w64-toolchain_win-64
+    - m2w64-toolchain
+    - m2-base
+    - m2-make
+    - m2-patch
   host:
 
 test:
