@@ -1,0 +1,42 @@
+{% set version = "3.4.0" %}
+
+package:
+  name: pdcurses
+  version: {{ version }}
+
+source:
+  - url: https://github.com/wmcbrine/PDCurses/archive/PDCurses_3_4.tar.gz
+    sha256: 41c88b053efaeabda0b9e6799c68575ee35a75b317e9ece0f9ecc31ce0903174
+
+build:
+  number: 0
+  skip: True  # [not win]
+
+requirements:
+  build:
+    - m2w64-toolchain_win-64
+  host:
+
+test:
+  commands:
+    - if not exist %LIBRARY_INC%\pdcurses\curses.h exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\pdcurses.a exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\pdcurses.dll exit 1  # [win]
+
+about:
+  home: https://pdcurses.org/
+  license: Public Domain
+  license_file: README
+  summary: PDCurses is a public domain curses library for DOS, OS/2, Windows console,
+    X11 and SDL
+  description: |
+    PDCurses is a public domain curses library for DOS, OS/2, Windows console,
+    X11 and SDL, implementing most of the functions available in X/Open and
+    System V R4 curses. It supports many compilers for these platforms. The
+    X11 port lets you recompile existing text-mode curses programs to produce
+    native X11 applications.
+  dev_url: https://github.com/wmcbrine/PDCurses
+
+extra:
+  recipe-maintainers:
+    - dakcarto
