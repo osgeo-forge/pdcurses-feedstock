@@ -16,10 +16,10 @@ build:
 
 requirements:
   build:
-    - m2w64-toolchain
+    - {{ compiler('m2w64_c') }}
+    - {{ compiler('m2w64_cxx') }}
     - m2-base
     - m2-make
-    - m2-patch
   host:
 
 test:
